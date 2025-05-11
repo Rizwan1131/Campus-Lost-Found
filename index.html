@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Lost & Found</title>
+    <style>
+        /* GLOBAL STYLES */
+:root {
+  /* Light Mode Colors */
+  --primary-color: #4a6fa5;
+  --primary-dark: #3b5998;
+  --secondary-color: #e67e22;
+  --secondary-dark: #d35400;
+  --text-color: #333333;
+  --text-light: #666666;
+  --bg-color: #f5f7fa;
+  --card-color: #ffffff;
+  --border-color: #e1e8ed;
+  --danger-color: #e74c3c;
+  --success-color: #2ecc71;
+  --warning-color: #f39c12;
+  --info-color: #3498db;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+/* Dark Mode Colors */
+.dark-mode {
+  --primary-color: #5a8dd6;
+  --primary-dark: #4a6fa5;
+  --secondary-color: #f39c12;
+  --secondary-dark: #e67e22;
+  --text-color: #f5f5f5;
+  --text-light: #cccccc;
+  --bg-color: #1a1a2e;
+  --card-color: #242447;
+  --border-color: #333355;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  transition: var(--transition);
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+ul {
+  list-style: none;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--card-color);
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: var(--primary-color);
+}
+
+.logo i {
+  margin-right: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  color: var(--text-light);
+  font-weight: 500;
+  transition: var(--transition);
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--primary-color);
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary-color);
+}
+
+.theme-toggle {
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: var(--text-light);
+  transition: var(--transition);
+}
+
+.theme-toggle:hover {
+  color: var(--primary-color);
+  transform: rotate(30deg);
+}
+
+.mobile-menu-btn {
+  display: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: var(--text-color);
+}
+
+/* PAGES CONTAINER */
+.page {
+  display: none;
+  padding: 2rem;
+  min-height: calc(100vh - 70px - 200px); /* Adjusted for navbar and footer */
+}
+
+.page.active {
+  display: block;
+}
+
+/* HOME PAGE */
+.hero {
+  text-align: center;
+  padding: 3rem 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: var(--text-light);
+}
+
+.hero-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: var(--transition);
+  font-size: 1rem;
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: var(--secondary-dark);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn-outline:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.notification {
+  background-color: var(--info-color);
+  color: white;
+  padding: 1rem;
+  border-radius: 5px;
+  margin: 1rem auto;
+  max-width: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow);
+}
+
+.notification i {
+  margin-right: 0.5rem;
+}
+
+.close-notification {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.stat-box {
+  background-color: var(--card-color);
+  border-radius: 10px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  flex: 1;
+  min-width: 200px;
+  max-width: 250px;
+  transition: var(--transition);
+}
+
+.stat-box:hover {
+  transform: translateY(-5px);
+}
+
+.stat-box i {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.stat-box h3 {
+  margin-bottom: 0.5rem;
+}
+
+.stat-box p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.recent-listings {
+  margin: 3rem auto;
+  max-width: 1200px;
+}
+
+.recent-listings h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.recent-listings h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background-color: var(--primary-color);
+}
+
+/* CARDS */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background-color: var(--card-color);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card-image {
+  height: 180px;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+.card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.badge {
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: white;
+}
+
+.badge-lost {
+  background-color: var(--danger-color);
+}
+
+.badge-found {
+  background-color: var(--success-color);
+}
+
+.card-info {
+  margin-bottom: 1rem;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.card-info p {
+  margin-bottom: 0.3rem;
+  display: flex;
+  align-items: center;
+}
+
+.card-info i {
+  width: 20px;
+  margin-right: 0.5rem;
+  color: var(--primary-color);
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.card-category {
+  background-color: rgba(74, 111, 165, 0.1);
+  color: var(--primary-color);
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  font-size: 0.8rem;
+}
+
+.card-date {
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+/* FORMS */
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: var(--card-color);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
+.form-container h2 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--primary-color);
+}
+
+.form-container h2 i {
+  margin-right: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: var(--transition);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(74, 111, 165, 0.2);
+}
+
+textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+.submit-btn {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+/* LISTINGS PAGE */
+.listings-header,
+.my-submissions-header {
+  margin-bottom: 2rem;
+}
+
+.filter-controls {
+  display: flex;
+  justify-content: space-between;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.search-box {
+  position: relative;
+  flex: 1;
+  max-width: 300px;
+}
+
+.search-box input {
+  padding-right: 2.5rem;
+}
+
+.search-box i {
+  position: absolute;
+  right: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+  pointer-events: none;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.filter-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--bg-color);
+  color: var(--text-light);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.advanced-filters {
+  margin-top: 1rem;
+}
+
+.filter-panel {
+  background-color: var(--card-color);
+  padding: 1rem;
+  border-radius: 5px;
+  margin-top: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.filter-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+.hidden {
+  display: none;
+}
+
+#no-results,
+#no-submissions {
+  text-align: center;
+  padding: 3rem;
+}
+
+#no-results i,
+#no-submissions i {
+  font-size: 3rem;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+}
+
+.action-buttons {
+  margin-top: 1.5rem;
+}
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+}
+
+.modal-content {
+  background-color: var(--card-color);
+  margin: 10% auto;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  max-width: 800px;
+  width: 90%;
+  animation: modalopen 0.3s;
+}
+
+@keyframes modalopen {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.close-modal {
+  color: var(--text-light);
+  float: right;
+  font-size: 1.8rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-modal:hover {
+  color: var(--primary-color);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.modal-header h2 {
+  font-size: 1.8rem;
+  margin-left: 1rem;
+}
+
+.modal-body {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.modal-image {
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+  height: 300px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.modal-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-details {
+  flex: 1;
+  min-width: 300px;
+}
+
+.modal-details p {
+  margin-bottom: 1rem;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+/* FOOTER */
+footer {
+  background-color: var(--card-color);
+  color: var(--text-color);
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.footer-logo i {
+  margin-right: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.footer-links a {
+  color: var(--text-light);
+  transition: var(--transition);
+}
+
+.footer-links a:hover {
+  color: var(--primary-color);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    background-color: var(--card-color);
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+    flex-direction: column;
+    align-items: center;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+    padding: 0;
+    z-index: 99;
+  }
+
+  .nav-links.active {
+    height: auto;
+    padding: 1rem 0;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .filter-controls {
+    flex-direction: column;
+  }
+
+  .search-box {
+    max-width: 100%;
+  }
+
+  .modal-content {
+    margin: 20% auto;
+    padding: 1.5rem;
+    width: 95%;
+  }
+
+  .modal-body {
+    flex-direction: column;
+  }
+
+  .modal-image {
+    max-width: 100%;
+    height: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 1rem;
+  }
+
+  .btn {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .stat-box {
+    min-width: 100%;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .form-container {
+    padding: 1.5rem;
+  }
+}
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-search-location"></i>
+            <span>Campus Lost & Found</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+            <li><a href="#" class="nav-link" data-page="report-lost">Report Lost</a></li>
+            <li><a href="#" class="nav-link" data-page="report-found">Report Found</a></li>
+            <li><a href="#" class="nav-link" data-page="all-listings">View All</a></li>
+            <li><a href="#" class="nav-link" data-page="my-submissions">My Submissions</a></li>
+        </ul>
+        <div class="theme-toggle">
+            <i class="fas fa-moon"></i>
+        </div>
+        <div class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <section id="home" class="page active">
+        <div class="hero">
+            <h1>Lost Something on Campus?</h1>
+            <p>Report your lost items or check if someone found them!</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" id="btn-report-lost">Report Lost Item</button>
+                <button class="btn btn-secondary" id="btn-report-found">Report Found Item</button>
+            </div>
+            <div class="hero-buttons second-row">
+                <button class="btn btn-outline" id="btn-view-all">View All Posts</button>
+                <button class="btn btn-outline" id="btn-my-submissions">My Submissions</button>
+            </div>
+        </div>
+        <div class="notification" id="notification">
+            <i class="fas fa-bell"></i>
+            <span>New found item posted in Electronics category!</span>
+            <button class="close-notification"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="stats-container">
+            <div class="stat-box">
+                <i class="fas fa-search"></i>
+                <h3>Lost Items</h3>
+                <p id="lost-count">0</p>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-hand-holding"></i>
+                <h3>Found Items</h3>
+                <p id="found-count">0</p>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-check-circle"></i>
+                <h3>Returned</h3>
+                <p>0</p>
+            </div>
+        </div>
+        <div class="recent-listings">
+            <h2>Recent Listings</h2>
+            <div class="cards-container" id="recent-items-container">
+                <!-- Recent items will be populated here via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- REPORT LOST PAGE -->
+    <section id="report-lost" class="page">
+        <div class="form-container">
+            <h2><i class="fas fa-search"></i> Report a Lost Item</h2>
+            <form id="lost-form">
+                <div class="form-group">
+                    <label for="lost-item-name">Item Name*</label>
+                    <input type="text" id="lost-item-name" placeholder="e.g. Blue Backpack" required>
+                </div>
+                <div class="form-group">
+                    <label for="lost-category">Category*</label>
+                    <select id="lost-category" required>
+                        <option value="">Select Category</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="ID Cards">ID Cards</option>
+                        <option value="Books">Books</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Accessories">Accessories</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="lost-description">Description*</label>
+                    <textarea id="lost-description" placeholder="Describe the item with details like color, brand, etc."
+                        required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="lost-location">Location*</label>
+                        <input type="text" id="lost-location" placeholder="e.g. Library, 2nd Floor" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lost-date">Date Lost*</label>
+                        <input type="date" id="lost-date" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lost-contact">Contact Information*</label>
+                    <input type="text" id="lost-contact" placeholder="Phone or Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="lost-image">Upload Image (Optional)</label>
+                    <input type="file" id="lost-image" accept="image/*">
+                </div>
+                <button type="submit" class="btn btn-primary submit-btn">Submit Report</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- REPORT FOUND PAGE -->
+    <section id="report-found" class="page">
+        <div class="form-container">
+            <h2><i class="fas fa-hand-holding"></i> Report a Found Item</h2>
+            <form id="found-form">
+                <div class="form-group">
+                    <label for="found-item-name">Item Name*</label>
+                    <input type="text" id="found-item-name" placeholder="e.g. Silver Watch" required>
+                </div>
+                <div class="form-group">
+                    <label for="found-category">Category*</label>
+                    <select id="found-category" required>
+                        <option value="">Select Category</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="ID Cards">ID Cards</option>
+                        <option value="Books">Books</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Accessories">Accessories</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="found-description">Description*</label>
+                    <textarea id="found-description"
+                        placeholder="Describe the item with details like color, brand, etc." required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="found-location">Location*</label>
+                        <input type="text" id="found-location" placeholder="e.g. Cafeteria" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="found-date">Date Found*</label>
+                        <input type="date" id="found-date" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="found-contact">Contact Information*</label>
+                    <input type="text" id="found-contact" placeholder="Phone or Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="found-image">Upload Image (Optional)</label>
+                    <input type="file" id="found-image" accept="image/*">
+                </div>
+                <button type="submit" class="btn btn-primary submit-btn">Submit Report</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ALL LISTINGS PAGE -->
+    <section id="all-listings" class="page">
+        <div class="listings-header">
+            <h2>All Listings</h2>
+            <div class="filter-controls">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Search items...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="lost">Lost</button>
+                    <button class="filter-btn" data-filter="found">Found</button>
+                </div>
+            </div>
+            <div class="advanced-filters">
+                <button id="toggle-filters" class="btn btn-sm">
+                    <i class="fas fa-filter"></i> Advanced Filters
+                </button>
+                <div id="filter-panel" class="hidden">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="filter-category">Category</label>
+                            <select id="filter-category">
+                                <option value="">All Categories</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="ID Cards">ID Cards</option>
+                                <option value="Books">Books</option>
+                                <option value="Clothing">Clothing</option>
+                                <option value="Accessories">Accessories</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-location">Location</label>
+                            <input type="text" id="filter-location" placeholder="Any location">
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-date">Date Range</label>
+                            <input type="date" id="filter-date">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cards-container" id="listings-container">
+            <!-- Listings will be populated here via JavaScript -->
+        </div>
+        <div id="no-results" class="hidden">
+            <i class="fas fa-search"></i>
+            <p>No items match your search criteria.</p>
+        </div>
+    </section>
+
+    <!-- MY SUBMISSIONS PAGE -->
+    <section id="my-submissions" class="page">
+        <div class="my-submissions-header">
+            <h2>My Submissions</h2>
+            <div class="submissions-controls">
+                <div class="search-box">
+                    <input type="text" id="my-search-input" placeholder="Search my items...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <button id="export-json" class="btn btn-sm">
+                    <i class="fas fa-download"></i> Export as JSON
+                </button>
+            </div>
+        </div>
+        <div class="cards-container" id="my-submissions-container">
+            <!-- My submissions will be populated here via JavaScript -->
+        </div>
+        <div id="no-submissions" class="hidden">
+            <i class="fas fa-folder-open"></i>
+            <p>You haven't submitted any items yet.</p>
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="btn-report-lost-redirect">Report Lost Item</button>
+                <button class="btn btn-secondary" id="btn-report-found-redirect">Report Found Item</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ITEM DETAIL MODAL -->
+    <div id="item-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <span id="modal-badge" class="badge">Lost</span>
+                <h2 id="modal-title">Item Name</h2>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modal-image" src="/api/placeholder/400/320" alt="Item image">
+                </div>
+                <div class="modal-details">
+                    <p><strong>Category:</strong> <span id="modal-category">Electronics</span></p>
+                    <p><strong>Description:</strong> <span id="modal-description">Description of the item</span></p>
+                    <p><strong>Location:</strong> <span id="modal-location">Library</span></p>
+                    <p><strong>Date:</strong> <span id="modal-date">May 10, 2023</span></p>
+                    <p><strong>Contact:</strong> <span id="modal-contact">john@example.com</span></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="modal-contact-btn" class="btn btn-primary">Contact</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <i class="fas fa-search-location"></i>
+                <span>Campus Lost & Found</span>
+            </div>
+            <p>Helping campus community reconnect with their lost belongings.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Contact Us</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Campus Lost & Found. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+const navLinks = document.querySelectorAll('.nav-link');
+const pages = document.querySelectorAll('.page');
+const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+const navLinksContainer = document.querySelector('.nav-links');
+const themeToggle = document.querySelector('.theme-toggle');
+
+// Buttons
+const reportLostBtn = document.getElementById('btn-report-lost');
+const reportFoundBtn = document.getElementById('btn-report-found');
+const viewAllBtn = document.getElementById('btn-view-all');
+const mySubmissionsBtn = document.getElementById('btn-my-submissions');
+const reportLostRedirectBtn = document.getElementById('btn-report-lost-redirect');
+const reportFoundRedirectBtn = document.getElementById('btn-report-found-redirect');
+
+// Forms
+const lostForm = document.getElementById('lost-form');
+const foundForm = document.getElementById('found-form');
+
+// Listings Containers
+const listingsContainer = document.getElementById('listings-container');
+const mySubmissionsContainer = document.getElementById('my-submissions-container');
+const recentItemsContainer = document.getElementById('recent-items-container');
+
+// Search and Filter Elements
+const searchInput = document.getElementById('search-input');
+const mySearchInput = document.getElementById('my-search-input');
+const filterButtons = document.querySelectorAll('.filter-btn');
+const toggleFiltersBtn = document.getElementById('toggle-filters');
+const filterPanel = document.getElementById('filter-panel');
+const filterCategory = document.getElementById('filter-category');
+const filterLocation = document.getElementById('filter-location');
+const filterDate = document.getElementById('filter-date');
+
+// Stats Elements
+const lostCount = document.getElementById('lost-count');
+const foundCount = document.getElementById('found-count');
+
+// Modal Elements
+const itemModal = document.getElementById('item-modal');
+const modalTitle = document.getElementById('modal-title');
+const modalBadge = document.getElementById('modal-badge');
+const modalImage = document.getElementById('modal-image');
+const modalCategory = document.getElementById('modal-category');
+const modalDescription = document.getElementById('modal-description');
+const modalLocation = document.getElementById('modal-location');
+const modalDate = document.getElementById('modal-date');
+const modalContact = document.getElementById('modal-contact');
+const modalContactBtn = document.getElementById('modal-contact-btn');
+const closeModal = document.querySelector('.close-modal');
+
+// Notification Elements
+const notification = document.getElementById('notification');
+const closeNotification = document.querySelector('.close-notification');
+
+// Export JSON Button
+const exportJsonBtn = document.getElementById('export-json');
+
+// No Results Elements
+const noResults = document.getElementById('no-results');
+const noSubmissions = document.getElementById('no-submissions');
+
+// Data Storage
+let items = JSON.parse(localStorage.getItem('lostFoundItems')) || [];
+const currentUser = 'user-' + Math.random().toString(36).substr(2, 9); // Simple user ID simulation
+
+// Initialize the app
+function init() {
+    // Check if it's the first visit
+    if (!localStorage.getItem('lostFoundItems')) {
+        // Add some sample data
+        addSampleData();
+    }
+    
+    // Set theme preference
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+    
+    // Update stats
+    updateStats();
+    
+    // Render the latest items on home page
+    renderRecentItems();
+    
+    // Show notification after a delay
+    setTimeout(() => {
+        notification.style.display = 'flex';
+    }, 3000);
+    
+    // Check if any items exist
+    if (items.length === 0) {
+        noResults.classList.remove('hidden');
+    }
+    
+    // Check if user has any submissions
+    const userItems = items.filter(item => item.userId === currentUser);
+    if (userItems.length === 0) {
+        noSubmissions.classList.remove('hidden');
+    }
+}
+
+// Add sample data for first-time visitors
+function addSampleData() {
+    const sampleItems = [
+        {
+            id: generateId(),
+            type: 'lost',
+            name: 'MacBook Pro',
+            category: 'Electronics',
+            description: 'Silver MacBook Pro 13", with stickers on the back cover. Last used in the Library.',
+            location: 'Main Library, 2nd Floor',
+            date: '2025-05-08',
+            contact: 'johndoe@example.com',
+            image: '/api/placeholder/400/320',
+            userId: 'demo-user-1',
+            timestamp: Date.now() - 86400000 // 1 day ago
+        },
+        {
+            id: generateId(),
+            type: 'found',
+            name: 'Blue Backpack',
+            category: 'Accessories',
+            description: 'Found a blue Jansport backpack with some textbooks inside.',
+            location: 'Cafeteria',
+            date: '2025-05-09',
+            contact: 'janedoe@example.com',
+            image: '/api/placeholder/400/320',
+            userId: 'demo-user-2',
+            timestamp: Date.now() - 43200000 // 12 hours ago
+        },
+        {
+            id: generateId(),
+            type: 'lost',
+            name: 'Student ID Card',
+            category: 'ID Cards',
+            description: 'Lost my student ID card somewhere near the Science Building.',
+            location: 'Science Building',
+            date: '2025-05-10',
+            contact: '555-123-4567',
+            image: '/api/placeholder/400/320',
+            userId: 'demo-user-3',
+            timestamp: Date.now() - 21600000 // 6 hours ago
+        },
+        {
+            id: generateId(),
+            type: 'found',
+            name: 'Glasses',
+            category: 'Accessories',
+            description: 'Found black-rimmed glasses in a green case.',
+            location: 'Engineering Building Room 201',
+            date: '2025-05-11',
+            contact: 'finder@example.com',
+            image: '/api/placeholder/400/320',
+            userId: 'demo-user-4',
+            timestamp: Date.now() - 10800000 // 3 hours ago
+        }
+    ];
+    
+    items = sampleItems;
+    localStorage.setItem('lostFoundItems', JSON.stringify(items));
+}
+
+// Page Navigation
+function navigateTo(pageId) {
+    // Hide all pages
+    pages.forEach(page => {
+        page.classList.remove('active');
+    });
+    
+    // Show the selected page
+    document.getElementById(pageId).classList.add('active');
+    
+    // Update active nav link
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('data-page') === pageId) {
+            link.classList.add('active');
+        }
+    });
+    
+    // Close mobile menu if open
+    if (navLinksContainer.classList.contains('active')) {
+        navLinksContainer.classList.remove('active');
+    }
+    
+    // Render appropriate content based on the page
+    if (pageId === 'all-listings') {
+        renderAllListings();
+    } else if (pageId === 'my-submissions') {
+        renderMySubmissions();
+    }
+    
+    // Scroll to top
+    window.scrollTo(0, 0);
+}
+
+// Toggle Mobile Menu
+function toggleMobileMenu() {
+    navLinksContainer.classList.toggle('active');
+}
+
+// Toggle Dark Mode
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDarkMode);
+    
+    themeToggle.innerHTML = isDarkMode ? 
+        '<i class="fas fa-sun"></i>' : 
+        '<i class="fas fa-moon"></i>';
+}
+
+// Toggle Advanced Filters
+function toggleFilters() {
+    filterPanel.classList.toggle('hidden');
+}
+
+// Update Stats
+function updateStats() {
+    const lostItems = items.filter(item => item.type === 'lost');
+    const foundItems = items.filter(item => item.type === 'found');
+    
+    lostCount.textContent = lostItems.length;
+    foundCount.textContent = foundItems.length;
+}
+
+// Generate a unique ID
+function generateId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+// Format date for display
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+}
+
+// Get time ago for display
+function getTimeAgo(timestamp) {
+    const seconds = Math.floor((Date.now() - timestamp) / 1000);
+    
+    if (seconds < 60) {
+        return `${seconds} seconds ago`;
+    }
+    
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) {
+        return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+    }
+    
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) {
+        return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+    }
+    
+    const days = Math.floor(hours / 24);
+    if (days < 30) {
+        return `${days} day${days !== 1 ? 's' : ''} ago`;
+    }
+    
+    const months = Math.floor(days / 30);
+    if (months < 12) {
+        return `${months} month${months !== 1 ? 's' : ''} ago`;
+    }
+    
+    const years = Math.floor(months / 12);
+    return `${years} year${years !== 1 ? 's' : ''} ago`;
+}
+
+// Create Item Card
+function createItemCard(item) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.setAttribute('data-id', item.id);
+    
+    card.innerHTML = `
+        <div class="card-image">
+            <img src="${item.image || '/api/placeholder/400/320'}" alt="${item.name}">
+        </div>
+        <div class="card-content">
+            <div class="card-header">
+                <h3 class="card-title">${item.name}</h3>
+                <span class="badge badge-${item.type}">${item.type === 'lost' ? 'Lost' : 'Found'}</span>
+            </div>
+            <div class="card-info">
+                <p><i class="fas fa-map-marker-alt"></i> ${item.location}</p>
+                <p><i class="fas fa-calendar-alt"></i> ${formatDate(item.date)}</p>
+            </div>
+            <div class="card-footer">
+                <span class="card-category">${item.category}</span>
+                <span class="card-date">${getTimeAgo(item.timestamp)}</span>
+            </div>
+        </div>
+    `;
+    
+    card.addEventListener('click', () => {
+        openModal(item);
+    });
+    
+    return card;
+}
+
+// Render Recent Items on Home Page
+function renderRecentItems() {
+    recentItemsContainer.innerHTML = '';
+    
+    // Sort items by timestamp (newest first) and get the latest 4
+    const recentItems = [...items]
+        .sort((a, b) => b.timestamp - a.timestamp)
+        .slice(0, 4);
+    
+    if (recentItems.length === 0) {
+        recentItemsContainer.innerHTML = '<p class="no-items">No items have been posted yet.</p>';
+        return;
+    }
+    
+    recentItems.forEach(item => {
+        recentItemsContainer.appendChild(createItemCard(item));
+    });
+}
+
+// Render All Listings
+function renderAllListings(filterType = 'all', searchQuery = '') {
+    listingsContainer.innerHTML = '';
+    
+    let filteredItems = [...items];
+    
+    // Apply type filter
+    if (filterType !== 'all') {
+        filteredItems = filteredItems.filter(item => item.type === filterType);
+    }
+    
+    // Apply search query
+    if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        filteredItems = filteredItems.filter(item => 
+            item.name.toLowerCase().includes(query) ||
+            item.description.toLowerCase().includes(query) ||
+            item.location.toLowerCase().includes(query) ||
+            item.category.toLowerCase().includes(query)
+        );
+    }
+    
+    // Apply category filter
+    const categoryValue = filterCategory.value;
+    if (categoryValue) {
+        filteredItems = filteredItems.filter(item => item.category === categoryValue);
+    }
+    
+    // Apply location filter
+    const locationValue = filterLocation.value;
+    if (locationValue) {
+        filteredItems = filteredItems.filter(item => 
+            item.location.toLowerCase().includes(locationValue.toLowerCase())
+        );
+    }
+    
+    // Apply date filter
+    const dateValue = filterDate.value;
+    if (dateValue) {
+        filteredItems = filteredItems.filter(item => item.date >= dateValue);
+    }
+    
+    // Sort by newest first
+    filteredItems.sort((a, b) => b.timestamp - a.timestamp);
+    
+    // Check if we have any results
+    if (filteredItems.length === 0) {
+        noResults.classList.remove('hidden');
+    } else {
+        noResults.classList.add('hidden');
+    }
+    
+    // Render the items
+    filteredItems.forEach(item => {
+        listingsContainer.appendChild(createItemCard(item));
+    });
+}
+
+// Render My Submissions
+function renderMySubmissions(searchQuery = '') {
+    mySubmissionsContainer.innerHTML = '';
+    
+    // Filter only user's items
+    let userItems = items.filter(item => item.userId === currentUser);
+    
+    // Apply search query if any
+    if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        userItems = userItems.filter(item => 
+            item.name.toLowerCase().includes(query) ||
+            item.description.toLowerCase().includes(query) ||
+            item.location.toLowerCase().includes(query) ||
+            item.category.toLowerCase().includes(query)
+        );
+    }
+    
+    // Sort by newest first
+    userItems.sort((a, b) => b.timestamp - a.timestamp);
+    
+    // Check if user has any submissions
+    if (userItems.length === 0) {
+        noSubmissions.classList.remove('hidden');
+    } else {
+        noSubmissions.classList.add('hidden');
+    }
+    
+    // Create and render user's item cards
+    userItems.forEach(item => {
+        const card = createItemCard(item);
+        
+        // Add delete button to each card
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'btn btn-sm';
+        deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+        deleteBtn.style.position = 'absolute';
+        deleteBtn.style.top = '10px';
+        deleteBtn.style.right = '10px';
+        deleteBtn.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+        deleteBtn.style.color = '#e74c3c';
+        deleteBtn.style.borderRadius = '50%';
+        deleteBtn.style.width = '30px';
+        deleteBtn.style.height = '30px';
+        deleteBtn.style.display = 'flex';
+        deleteBtn.style.alignItems = 'center';
+        deleteBtn.style.justifyContent = 'center';
+        
+        // Prevent event bubbling
+        deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            deleteItem(item.id);
+        });
+        
+        card.style.position = 'relative';
+        card.appendChild(deleteBtn);
+        
+        mySubmissionsContainer.appendChild(card);
+    });
+}
+
+// Delete Item
+function deleteItem(id) {
+    swal({
+        title: "Are you sure?",
+        text: "Once deleted, you won't be able to recover this item!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+            // Remove item from array
+            items = items.filter(item => item.id !== id);
+            
+            // Update localStorage
+            localStorage.setItem('lostFoundItems', JSON.stringify(items));
+            
+            // Update the UI
+            renderMySubmissions();
+            updateStats();
+            
+            swal("Poof! Your item has been deleted!", {
+                icon: "success",
+            });
+        }
+    });
+}
+
+// Open Item Modal
+function openModal(item) {
+    modalTitle.textContent = item.name;
+    modalBadge.textContent = item.type === 'lost' ? 'Lost' : 'Found';
+    modalBadge.className = `badge badge-${item.type}`;
+    modalImage.src = item.image || '/api/placeholder/400/320';
+    modalCategory.textContent = item.category;
+    modalDescription.textContent = item.description;
+    modalLocation.textContent = item.location;
+    modalDate.textContent = formatDate(item.date);
+    modalContact.textContent = item.contact;
+    
+    modalContactBtn.onclick = () => {
+        const contactInfo = item.contact;
+        
+        // Check if it's an email
+        if (contactInfo.includes('@')) {
+            window.location.href = `mailto:${contactInfo}?subject=Regarding your ${item.type} item: ${item.name}`;
+        } 
+        // Check if it's a phone number
+        else if (/\d/.test(contactInfo)) {
+            window.location.href = `tel:${contactInfo}`;
+        } 
+        // Otherwise, just show the contact info
+        else {
+            swal("Contact Information", contactInfo, "info");
+        }
+    };
+    
+    itemModal.style.display = 'block';
+}
+
+// Close Modal
+function closeItemModal() {
+    itemModal.style.display = 'none';
+}
+
+// Handle Lost Form Submission
+function handleLostFormSubmit(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('lost-item-name').value;
+    const category = document.getElementById('lost-category').value;
+    const description = document.getElementById('lost-description').value;
+    const location = document.getElementById('lost-location').value;
+    const date = document.getElementById('lost-date').value;
+    const contact = document.getElementById('lost-contact').value;
+    const imageInput = document.getElementById('lost-image');
+    
+    // Validate form
+    if (!name || !category || !description || !location || !date || !contact) {
+        swal("Error", "Please fill in all required fields", "error");
+        return;
+    }
+    
+    // Create new item object
+    const newItem = {
+        id: generateId(),
+        type: 'lost',
+        name,
+        category,
+        description,
+        location,
+        date,
+        contact,
+        image: '/api/placeholder/400/320', // Placeholder for now
+        userId: currentUser,
+        timestamp: Date.now()
+    };
+    
+    // Add to items array
+    items.push(newItem);
+    
+    // Save to localStorage
+    localStorage.setItem('lostFoundItems', JSON.stringify(items));
+    
+    // Reset form
+    lostForm.reset();
+    
+    // Show success message
+    swal("Success!", "Your lost item has been reported!", "success")
+    .then(() => {
+        // Navigate to all listings page
+        navigateTo('all-listings');
+        
+        // Update stats
+        updateStats();
+        
+        // Update recent items
+        renderRecentItems();
+    });
+}
+
+// Handle Found Form Submission
+function handleFoundFormSubmit(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('found-item-name').value;
+    const category = document.getElementById('found-category').value;
+    const description = document.getElementById('found-description').value;
+    const location = document.getElementById('found-location').value;
+    const date = document.getElementById('found-date').value;
+    const contact = document.getElementById('found-contact').value;
+    const imageInput = document.getElementById('found-image');
+    
+    // Validate form
+    if (!name || !category || !description || !location || !date || !contact) {
+        swal("Error", "Please fill in all required fields", "error");
+        return;
+    }
+    
+    // Create new item object
+    const newItem = {
+        id: generateId(),
+        type: 'found',
+        name,
+        category,
+        description,
+        location,
+        date,
+        contact,
+        image: '/api/placeholder/400/320', // Placeholder for now
+        userId: currentUser,
+        timestamp: Date.now()
+    };
+    
+    // Add to items array
+    items.push(newItem);
+    
+    // Save to localStorage
+    localStorage.setItem('lostFoundItems', JSON.stringify(items));
+    
+    // Reset form
+    foundForm.reset();
+    
+    // Show success message
+    swal("Success!", "Thank you for reporting a found item!", "success")
+    .then(() => {
+        // Navigate to all listings page
+        navigateTo('all-listings');
+        
+        // Update stats
+        updateStats();
+        
+        // Update recent items
+        renderRecentItems();
+        
+        // Show notification to other users (simulation)
+        showNotification(`New ${category} item found and reported!`);
+    });
+}
+
+// Show Notification
+function showNotification(message) {
+    notification.querySelector('span').textContent = message;
+    notification.style.display = 'flex';
+    
+    // Auto hide after 5 seconds
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 5000);
+}
+
+// Export User Data as JSON
+function exportUserData() {
+    const userItems = items.filter(item => item.userId === currentUser);
+    
+    if (userItems.length === 0) {
+        swal("No Data", "You don't have any submissions to export.", "info");
+        return;
+    }
+    
+    const dataStr = JSON.stringify(userItems, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.setAttribute('href', url);
+    a.setAttribute('download', 'my-lost-found-items.json');
+    a.click();
+    
+    URL.revokeObjectURL(url);
+}
+
+// Event Listeners
+document.addEventListener('DOMContentLoaded', () => {
+    init();
+    
+    // Navigation
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const pageId = link.getAttribute('data-page');
+            navigateTo(pageId);
+        });
+    });
+    
+    // Mobile Menu
+    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    
+    // Theme Toggle
+    themeToggle.addEventListener('click', toggleDarkMode);
+    
+    // Home Page Buttons
+    reportLostBtn.addEventListener('click', () => navigateTo('report-lost'));
+    reportFoundBtn.addEventListener('click', () => navigateTo('report-found'));
+    viewAllBtn.addEventListener('click', () => navigateTo('all-listings'));
+    mySubmissionsBtn.addEventListener('click', () => navigateTo('my-submissions'));
+    
+    // No Submissions Page Buttons
+    reportLostRedirectBtn.addEventListener('click', () => navigateTo('report-lost'));
+    reportFoundRedirectBtn.addEventListener('click', () => navigateTo('report-found'));
+    
+    // Forms
+    lostForm.addEventListener('submit', handleLostFormSubmit);
+    foundForm.addEventListener('submit', handleFoundFormSubmit);
+    
+    // Search
+    searchInput.addEventListener('input', (e) => {
+        const searchQuery = e.target.value;
+        const activeFilterBtn = document.querySelector('.filter-btn.active');
+        const filterType = activeFilterBtn ? activeFilterBtn.getAttribute('data-filter') : 'all';
+        renderAllListings(filterType, searchQuery);
+    });
+    
+    mySearchInput.addEventListener('input', (e) => {
+        renderMySubmissions(e.target.value);
+    });
+    
+    // Filter Buttons
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterButtons.forEach(b => b.classList.remove('active'));
+            
+            // Add active class to clicked button
+            btn.classList.add('active');
+            
+            // Apply filter
+            const filterType = btn.getAttribute('data-filter');
+            const searchQuery = searchInput.value;
+            renderAllListings(filterType, searchQuery);
+        });
+    });
+    
+    // Advanced Filters
+    toggleFiltersBtn.addEventListener('click', toggleFilters);
+    
+    [filterCategory, filterLocation, filterDate].forEach(filter => {
+        filter.addEventListener('change', () => {
+            const activeFilterBtn = document.querySelector('.filter-btn.active');
+            const filterType = activeFilterBtn ? activeFilterBtn.getAttribute('data-filter') : 'all';
+            const searchQuery = searchInput.value;
+            renderAllListings(filterType, searchQuery);
+        });
+    });
+    
+    // Modal
+    closeModal.addEventListener('click', closeItemModal);
+    window.addEventListener('click', (e) => {
+        if (e.target === itemModal) {
+            closeItemModal();
+        }
+    });
+    
+    // Close Notification
+    closeNotification.addEventListener('click', () => {
+        notification.style.display = 'none';
+    });
+    
+    // Export JSON
+    exportJsonBtn.addEventListener('click', exportUserData);
+    
+    // Set current date as max date for date inputs
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('lost-date').max = today;
+    document.getElementById('found-date').max = today;
+});
+
+// Handle escape key to close modal
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && itemModal.style.display === 'block') {
+        closeItemModal();
+    }
+});
+    </script>
+</body>
+
+</html>
